@@ -56,12 +56,12 @@ class OdomCheckNode : public rclcpp::Node
       //   std::memcpy(&odom_msg.y, msg.data.data() + 4, sizeof(float));
       // //parser_.parse(msg, odom_msg);
       }
-      odom_msgD_.roll = odom_msg16_.roll * 6.28 / 360;
-      odom_msgD_.pitch = odom_msg16_.pitch * 6.28 / 360;
-      odom_msgD_.yaw = odom_msg16_.yaw * 6.28 / 360;
-      odom_msgD_.vx = odom_msg16_.vx * 45 / 1000 * 3.14 / 2048;
-      odom_msgD_.vy = odom_msg16_.vy * 45 / 1000 * 3.14 / 2048;
-      // odom_msgD_.vz = odom_msg16_.vz * 45 / 1000 * 3.14 / 2048;
+      odom_msgD_.roll = odom_msg16_.roll * 6.28 / 360.0;
+      odom_msgD_.pitch = odom_msg16_.pitch * 6.28 / 360.0;
+      odom_msgD_.yaw = odom_msg16_.yaw * 6.28 / 360.0;
+      odom_msgD_.vx = odom_msg16_.vx * 45.0 * 3.14 / 2048.0;
+      odom_msgD_.vy = odom_msg16_.vy * 45.0 * 3.14 / 2048.0;
+      // odom_msgD_.vz = odom_msg16_.vz * 45.0 * 3.14 / 2048;
       odom_msgD_.ax = odom_msg16_.ax * 1.0;
       odom_msgD_.ay = odom_msg16_.ay * 1.0;
       odom_msgD_.az = odom_msg16_.az * 1.0;
