@@ -9,6 +9,8 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(can_plugins2 REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -21,7 +23,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
 ament_export_dependencies(rosidl_default_runtime)
 
 add_executable(odom_check_node src/odom_check_node.cpp)
-ament_target_dependencies(odom_check_node rclcpp can_plugins2 std_msgs)
+ament_target_dependencies(odom_check_node rclcpp can_plugins2 sensor_msgs nav_msgs)
 
 target_include_directories(odom_check_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
