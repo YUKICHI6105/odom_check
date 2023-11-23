@@ -75,6 +75,7 @@ class OdomCheckNode : public rclcpp::Node
       // pub_ = this->create_publisher<odom_check::msg::Odom>("odom_check", 10);
       pub_odom_ = this->create_publisher<nav_msgs::msg::Odometry>("odom", 10);
       pub_imu_ = this->create_publisher<sensor_msgs::msg::Imu>("imu", 10);
+      timer_ = this->create_wall_timer(1ms, std::bind(&OdomCheckNode::timer_callback, this));
     }
     void timer_callback();
 };
