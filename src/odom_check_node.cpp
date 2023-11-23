@@ -15,15 +15,15 @@ using namespace std::chrono_literals;
 
 template<class T>
 struct Odom{
-  T vx;
-  T vy;
-  T vz;
-  T ax;
-  T ay;
-  T az;
-  T yaw;
-  T pitch;
-  T roll;
+  T vx{0};
+  T vy{0};
+  T vz{0};
+  T ax{0};
+  T ay{0};
+  T az{0};
+  T yaw{0};
+  T pitch{0};
+  T roll{0};
 };
 
 class OdomCheckNode : public rclcpp::Node
@@ -34,8 +34,8 @@ class OdomCheckNode : public rclcpp::Node
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr pub_odom_;
     rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr pub_imu_;
     rclcpp::TimerBase::SharedPtr timer_;
-    Odom<double> odom_msgD_;
-    Odom<uint16_t> odom_msg16_;
+    Odom<double> odom_msgD_{};
+    Odom<uint16_t> odom_msg16_{};
     // can_utils::CanFrameParser parser_;
     // void can_callback(const can_plugins2::msg::Frame::SharedPtr msg);
     
