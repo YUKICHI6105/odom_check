@@ -77,34 +77,38 @@ class OdomCheckNode : public rclcpp::Node
       pub_imu_ = this->create_publisher<sensor_msgs::msg::Imu>("imu", 10);
       timer_ = this->create_wall_timer(1ms, std::bind(&OdomCheckNode::timer_callback, this));
     }
-    void timer_callback();
+    void timer_callback() {
+      // auto odom_msg = odom_check::msg::Odom();
+      auto odometry = nav_msgs::msg::Odometry();
+      auto imu = sensor_msgs::msg::Imu();
+
+      // 速度
+      odometry.twist.twist.linear.x = odom_msgD_.vx;
+      odometry.twist.twist.linear.y = odom_msgD_.vy;
+      // odometry.twist.twist.linear.z = odom_msgD_.vz;
+
+      // 角速度
+      imu.angular_velocity.x = odom_msgD_.roll;
+      imu.angular_velocity.y = odom_msgD_.pitch;
+      imu.angular_velocity.z = odom_msgD_.yaw;
+
+      // 加速度
+      imu.linear_acceleration.x = odom_msgD_.ax;
+      imu.linear_acceleration.y = odom_msgD_.ay;
+      imu.linear_acceleration.z = odom_msgD_.az;
+
+      odometry.header.frame_id = "odom";
+      imu.header.frame_id = "odom";
+      odometry.child_frame_id = "base_link";
+      const auto now = this->now();
+      odometry.header.stamp = now;
+      imu.header.stamp = now;
+      
+      // pub_->publish(odom_msg);
+      pub_odom_->publish(odometry);
+      pub_imu_->publish(imu);
+    }
 };
-
-void OdomCheckNode::timer_callback(){
-  // auto odom_msg = odom_check::msg::Odom();
-  auto odometry = nav_msgs::msg::Odometry();
-  auto imu = sensor_msgs::msg::Imu();
-
-  // 速度
-  odometry.twist.twist.linear.x = odom_msgD_.vx;
-  odometry.twist.twist.linear.y = odom_msgD_.vy;
-  // odometry.twist.twist.linear.z = odom_msgD_.vz;
-
-  // 角速度
-  imu.angular_velocity.x = odom_msgD_.roll;
-  imu.angular_velocity.y = odom_msgD_.pitch;
-  imu.angular_velocity.z = odom_msgD_.yaw;
-
-  // 加速度
-  imu.linear_acceleration.x = odom_msgD_.ax;
-  imu.linear_acceleration.y = odom_msgD_.ay;
-  imu.linear_acceleration.z = odom_msgD_.az;
-  
-  // pub_->publish(odom_msg);
-  pub_odom_->publish(odometry);
-  pub_imu_->publish(imu);
-}
-
 
 int main(int argc, char *argv[])
 {
